@@ -190,3 +190,35 @@ vias %>%
 
 ```
 
+```{r}
+vias %>%
+    filter(arvores_100m_mean < 5) %>%
+    ggplot(aes(pontomotot, y=..count.. / sum(..count..))) +
+    geom_bar()
+```
+
+```{r}
+vias %>%
+    ggplot(aes(arvores_100m_mean,..density..)) +
+    geom_histogram(binwidth = 2.5)
+```
+
+```{r}
+vias %>%
+    ggplot(aes(comprimento,..density..)) +
+    geom_histogram(binwidth = 100)
+```
+
+```{r}
+vias %>%
+    filter(comprimento > 2000) %>%
+    ggplot(aes(pontoonibu, y=..count../sum(..count..))) +
+    geom_bar()
+```
+
+```{r}
+vias %>%
+    filter(comprimento > 100) %>%
+    ggplot(aes(arvores_100m_mean, y=..count../sum(..count..))) +
+    geom_histogram(binwidth = 1)
+```
