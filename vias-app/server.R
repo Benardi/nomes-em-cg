@@ -26,16 +26,18 @@ shinyServer(function(input, output) {
     output$distPlot <- renderPlot({
         vias_profissao = vias %>% filter(profissao == prof_selecionada())
         vias_profissao %>% 
-            ggplot(aes(x = arvores_100m_mean)) + 
-            geom_histogram(binwidth = 1, 
-                           boundary = 0, 
-                           fill = "darkgreen") + 
-            scale_x_continuous(limits = c(0, 15))
+            ggplot(aes(x = arvores_100m_mean,..density..)) + 
+            geom_histogram(bins= input$bins,
+                           boundary = 0,
+                           fill="grey",
+                           color="black") + 
+            scale_x_continuous(limits = c(0, 15),breaks=seq(0,14.5,0.5))
     })
     
     output$listagem <- renderTable({
         vias %>% 
-            filter(profissao == prof_selecionada()) %>% 
+            filter(profissao == prof_selecionada()) %>%
+            arrange(comprimento) %>%
             select(nome = nomelograd, 
                    comprimento)
     })
