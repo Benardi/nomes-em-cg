@@ -26,7 +26,7 @@ shinyServer(function(input, output) {
     
     # prof_selecionada = reactive({input$profissao})
     
-    output$distPlot <- renderPlot({
+    output$onibusPlot <- renderPlot({
         vias_comprimento = vias %>%
             filter(comprimento >= input$comprimento[1]) %>%
             filter(comprimento <= input$comprimento[2])
@@ -39,6 +39,19 @@ shinyServer(function(input, output) {
                 position = 'dodge') +
             scale_x_continuous(limits = c(-2,max(vias_comprimento$pontoonibu) + 2))
         }) 
+    
+    output$arvoresPlot <- renderPlot({
+        vias_comprimento = vias %>%
+            filter(comprimento >= input$comprimento[1]) %>%
+            filter(comprimento <= input$comprimento[2])
+        
+        vias_comprimento %>% 
+            ggplot(aes(arvores_100m_mean, y=..count../sum(..count..))) +
+            geom_histogram(
+                fill="darkgreen",
+                color="black",
+                binwidth = 1)            
+                    }) 
     
     # output$listagem <- renderTable({
     #     vias %>% 

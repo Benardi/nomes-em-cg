@@ -13,7 +13,7 @@ source(here("code/read_wrangle.R"))
 shinyUI(fluidPage(
   # 
   # # Application title
-  # titlePanel("Ruas mais arborizadas por profissão"),
+  titlePanel("Ruas mais compridas têm mais árvores e pontos de ônibus?"),
   # 
   # # Sidebar with a slider input for number of bins 
   sidebarLayout(
@@ -35,10 +35,11 @@ shinyUI(fluidPage(
 
     # Show a plot of the generated distribution
     mainPanel(
-       plotOutput("distPlot"),
+       plotOutput("onibusPlot"),
        # tableOutput("listagem")
-       verbatimTextOutput("range"),
-       verbatimTextOutput("value")
+       plotOutput("arvoresPlot") #,
+       # verbatimTextOutput("range"),
+       # verbatimTextOutput("value")
     )
   )
 ))
