@@ -14,35 +14,31 @@ source(here("code/read_wrangle.R"))
 
 vias = read_wrangle_data()
 
-profissoes_nos_dados = vias %>% 
-  filter(!is.na(profissao)) %>%  
-  pull(profissao) %>% 
-  unique()
+# profissoes_nos_dados = vias %>% 
+#   filter(!is.na(profissao)) %>%  
+#   pull(profissao) %>% 
+#   unique()
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
     output$range <- renderPrint({ input$comprimento })
     output$value <- renderPrint({ input$comprimento[1]})
     
-    prof_selecionada = reactive({input$profissao})
-    # comprimento_selecionado = reactive({input$comprimento})
-    # filter(comprimento >= comprimento_selecionado[1]) %>%
-    # filter(comprimento <= comprimento_selecionado[2]) 
-    # comprimento_selecionado
+    # prof_selecionada = reactive({input$profissao})
     
     output$distPlot <- renderPlot({
-        vias_profissao = vias %>% filter(profissao == prof_selecionada()) %>%
-        filter(comprimento >= input$comprimento[1]) %>%
-        filter(comprimento <= input$comprimento[2])
+        vias_comprimento = vias %>%
+            filter(comprimento >= input$comprimento[1]) %>%
+            filter(comprimento <= input$comprimento[2])
         
-        vias_profissao %>% 
-            ggplot(aes(x = arvores_100m_mean,..density..)) + 
-            geom_histogram(bins= input$bins,
-                           boundary = 0,
-                           fill="grey",
-                           color="black") + 
-            scale_x_continuous(limits = c(0, 15),breaks=seq(0,14.5,0.5))
-    })
+        vias_comprimento %>% 
+            ggplot(aes(pontoonibu, y=..count../sum(..count..))) +
+            geom_bar(
+                fill="grey",
+                color="black",
+                position = 'dodge') +
+            scale_x_continuous(limits = c(-2,max(vias_comprimento$pontoonibu) + 2))
+        }) 
     
     # output$listagem <- renderTable({
     #     vias %>% 
