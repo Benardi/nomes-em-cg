@@ -17,11 +17,12 @@ shinyUI(fluidPage(
   ),
   fluidRow(
       column(1),
-      column(10,sliderInput("comprimento",
-                            "Comprimento da rua em metros:",
-                            min= 0,
-                            max =20000,
-                            value = c(0,10000))),
+      column(10,wellPanel(
+                 sliderInput("comprimento",
+                                "Comprimento da rua em metros:",
+                                min= 0,
+                                max =20000,
+                                value = c(0,10000)))),
       column(1)
   )
 ))
