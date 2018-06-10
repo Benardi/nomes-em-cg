@@ -14,18 +14,9 @@ source(here("code/read_wrangle.R"))
 
 vias = read_wrangle_data()
 
-# profissoes_nos_dados = vias %>% 
-#   filter(!is.na(profissao)) %>%  
-#   pull(profissao) %>% 
-#   unique()
-
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
-    output$range <- renderPrint({ input$comprimento })
-    output$value <- renderPrint({ input$comprimento[1]})
-    
-    # prof_selecionada = reactive({input$profissao})
-    
+
     output$onibusPlot <- renderPlot({
         vias_comprimento = vias %>%
             filter(comprimento >= input$comprimento[1]) %>%
@@ -52,13 +43,5 @@ shinyServer(function(input, output) {
                 color="black",
                 binwidth = 1)            
                     }) 
-    
-    # output$listagem <- renderTable({
-    #     vias %>% 
-    #         filter(profissao == prof_selecionada()) %>%
-    #         arrange(comprimento) %>%
-    #         select(nome = nomelograd, 
-    #                comprimento)
-    # })
     
 })
