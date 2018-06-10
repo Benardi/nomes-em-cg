@@ -21,10 +21,20 @@ profissoes_nos_dados = vias %>%
 
 # Define server logic required to draw a histogram
 shinyServer(function(input, output) {
+    output$range <- renderPrint({ input$comprimento })
+    output$value <- renderPrint({ input$comprimento[1]})
+    
     prof_selecionada = reactive({input$profissao})
+    # comprimento_selecionado = reactive({input$comprimento})
+    # filter(comprimento >= comprimento_selecionado[1]) %>%
+    # filter(comprimento <= comprimento_selecionado[2]) 
+    # comprimento_selecionado
     
     output$distPlot <- renderPlot({
-        vias_profissao = vias %>% filter(profissao == prof_selecionada())
+        vias_profissao = vias %>% filter(profissao == prof_selecionada()) %>%
+        filter(comprimento >= input$comprimento[1]) %>%
+        filter(comprimento <= input$comprimento[2])
+        
         vias_profissao %>% 
             ggplot(aes(x = arvores_100m_mean,..density..)) + 
             geom_histogram(bins= input$bins,
@@ -34,12 +44,12 @@ shinyServer(function(input, output) {
             scale_x_continuous(limits = c(0, 15),breaks=seq(0,14.5,0.5))
     })
     
-    output$listagem <- renderTable({
-        vias %>% 
-            filter(profissao == prof_selecionada()) %>%
-            arrange(comprimento) %>%
-            select(nome = nomelograd, 
-                   comprimento)
-    })
+    # output$listagem <- renderTable({
+    #     vias %>% 
+    #         filter(profissao == prof_selecionada()) %>%
+    #         arrange(comprimento) %>%
+    #         select(nome = nomelograd, 
+    #                comprimento)
+    # })
     
 })
