@@ -1,0 +1,10 @@
+name: vias-app
+title: vias-app
+username:
+account: benardi
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 360614
+bundleId: 1428327
+url: https://benardi.shinyapps.io/vias-app/
+when: 1528930521.51319

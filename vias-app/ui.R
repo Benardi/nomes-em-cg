@@ -1,7 +1,7 @@
 library(shiny)
 library(tidyverse)
 library(here)
-source(here("code/read_wrangle.R"))
+source(here("./read_wrangle.R"))
 
 # Define UI for application that draws a histogram
 shinyUI(fluidPage(
